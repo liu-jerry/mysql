@@ -32,12 +32,13 @@ RUN { \
 # comment out a few problematic configuration values
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
 
-VOLUME /var/lib/mysql
+# set charset
+ADD character.cnf /etc/mysql/conf.d/
+
+VOLUME ["/var/lib/mysql", "/etc/mysql"]
 
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-ADD my.cnf /usr/local/mysql/
-
 EXPOSE 3306
-CMD ["mysqld", "--defaults-file=/usr/local/mysql/my.cnf"]
+CMD ["mysqld"]
