@@ -37,5 +37,7 @@ VOLUME /var/lib/mysql
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
+ADD my.cnf /usr/local/mysql/
+
 EXPOSE 3306
-CMD ["mysqld"]
+CMD ["mysqld", "--defaults-file=/usr/local/mysql/my.cnf"]
